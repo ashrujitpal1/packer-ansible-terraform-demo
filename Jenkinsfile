@@ -57,6 +57,7 @@ pipeline {
           }*/
          stage('Terraform Deploy'){
              steps {
+                withAWS(credentials: 'Ashrujit-DevOps', region: 'us-east-1') {
                  dir('./terraform'){
 
                  sh  """
@@ -64,7 +65,7 @@ pipeline {
                      """
 
                  }
-
+                }
              }
          }
     }
