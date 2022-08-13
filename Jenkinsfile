@@ -34,27 +34,31 @@ pipeline {
                     sh "packer version"
               }
           }
-          stage('code checkout') {
+            stage('code checkout') {
                steps {
                     git branch: 'main', url: 'https://github.com/ashrujitpal1/packer-ansible-terraform-demo.git'
                     }
           }
           stage('Build AMI') {
                 steps {
-                    dir('./packer'){
-                     sh 'ls -la; pwd; packer build template.json'
+                    withAWS(credentials: 'Ashrujit-DevOps', region: 'us-east-1') {
+                        dir('./packer'){
+                        sh 'ls -la; pwd; packer init; packer build template.json'
                     }
                 }
+            }
           }
-          /*stage('Deploy??') {
+          stage('Deploy??') {
                 steps {
                     script {
+                       withAWS(credentials: 'Ashrujit-DevOps', region: 'us-east-1') { 
                        timeout(time: 2, unit: 'MINUTES') {
                           input(id: "Deploy Gate", message: "Want to Deploy ${params.project_name}?", ok: 'Deploy??')
                        }
+                       }
                     }
                 }
-          }*/
+          }
          stage('Terraform Deploy'){
              steps {
                 withAWS(credentials: 'Ashrujit-DevOps', region: 'us-east-1') {
