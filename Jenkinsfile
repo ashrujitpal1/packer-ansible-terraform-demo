@@ -48,7 +48,7 @@ pipeline {
                 }
             }
           }
-          stage('Deploy??') {
+          /*stage('Deploy??') {
                 steps {
                     script {
                        withAWS(credentials: 'Ashrujit-DevOps', region: 'us-east-1') { 
@@ -58,7 +58,7 @@ pipeline {
                        }
                     }
                 }
-          }
+          }*/
          stage('Terraform Deploy'){
              steps {
                 withAWS(credentials: 'Ashrujit-DevOps', region: 'us-east-1') {
